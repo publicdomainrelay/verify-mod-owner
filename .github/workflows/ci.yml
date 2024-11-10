@@ -1,0 +1,26 @@
+name: Verify Commits
+# yamllint disable-line rule:line-length
+# gh act -s GITHUB_TOKEN="$(gh auth token)" -P ubuntu-latest=ubuntu:22-04 --job test -W .github/workflows/ci.yml
+
+on:
+  push:
+    branches:
+    - 'main'
+    - 'main_*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Verify Commit Signatures
+      uses: ./
+      with:
+        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs
+        base_branch: '${{ github.base_ref }}'
+        file_path: 'data/FD6DC6E941D5AB1D1F746798D98E8F4DB6F8110A.pgp'
+        public_key_files: |
+          data/FD6DC6E941D5AB1D1F746798D98E8F4DB6F8110A.pgp
