@@ -85,33 +85,3 @@ In this example, the action will:
 ## License
 
 [Unlicense](LICENSE)
-```
-
-**Instructions:**
-
-1. **Build the Action**: Run `npm install` to install dependencies, then run `npm run build` to compile TypeScript to JavaScript.
-2. **Prepare the Action**: Run `npm run prepare` to bundle the action using `ncc`.
-3. **Include the Action in Your Workflow**: Use the `uses: ./` syntax to reference the action in your workflow.
-
-**Example Workflow File (`.github/workflows/verify-commits.yml`):**
-
-```yaml
-name: Verify Commits
-
-on: [push]
-
-jobs:
-  verify_commits:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Verify Commit Signatures
-        uses: ./
-        with:
-          base_branch: 'main'
-          file_path: 'src/'
-          public_key_files: |
-            keys/alice_pgp_public.asc
-            keys/bob_ssh_public.pub
-```
